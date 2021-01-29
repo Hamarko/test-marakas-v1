@@ -1,13 +1,26 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+  <div id="app"> 
+    <div class="container">
+      <router-view/>
+    </div>  
   </div>
 </template>
-
+<script>
+import token from './api/token'
+export default {
+  created () {
+    this.validateToken()
+  },
+  methods: {
+    validateToken(){
+      if(token.get()&&!token.validate ()){
+        token.clear()
+        this.$router.push({ path: '/login' })
+      }
+    }
+  }
+}
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
